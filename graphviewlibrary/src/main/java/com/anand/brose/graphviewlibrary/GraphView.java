@@ -38,8 +38,8 @@ public class GraphView extends HorizontalScrollView {
     private GraphSurfaceView graphSurfaceView;
     private List<WaveSample> pointList;
     private Paint paint;
-    private Paint markerPaint;
-    private Paint timePaint;
+//    private Paint markerPaint;
+//    private Paint timePaint;
     private Paint needlePaint;
     private int canvasColor = Color.rgb(0, 0, 0);
     private int markerColor = Color.argb(160, 30, 30, 30);
@@ -148,7 +148,7 @@ public class GraphView extends HorizontalScrollView {
      */
     public void setMarkerColor(int markerColor) {
         this.markerColor = markerColor;
-        markerPaint.setColor(markerColor);
+//        markerPaint.setColor(markerColor);
     }
 
     /**
@@ -168,7 +168,7 @@ public class GraphView extends HorizontalScrollView {
      */
     public void setTimeColor(int timeColor) {
         this.timeColor = timeColor;
-        timePaint.setColor(timeColor);
+//        timePaint.setColor(timeColor);
     }
 
     /**
@@ -342,16 +342,16 @@ public class GraphView extends HorizontalScrollView {
             needlePaint.setStyle(Paint.Style.STROKE);
 
             //Paint config for time text
-            timePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-            timePaint.setColor(timeColor);
-            timePaint.setStrokeWidth(1);
-            timePaint.setTextSize(timeMarkerSize / this.context.getResources().getDisplayMetrics().scaledDensity);
-            timePaint.setStyle(Paint.Style.STROKE);
+//            timePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+//            timePaint.setColor(timeColor);
+//            timePaint.setStrokeWidth(1);
+//            timePaint.setTextSize(timeMarkerSize / this.context.getResources().getDisplayMetrics().scaledDensity);
+//            timePaint.setStyle(Paint.Style.STROKE);
 
             //Paint config for right side marker
-            markerPaint = new Paint();
-            markerPaint.setColor(markerColor);
-            markerPaint.setStyle(Paint.Style.STROKE);
+//            markerPaint = new Paint();
+//            markerPaint.setColor(markerColor);
+//            markerPaint.setStyle(Paint.Style.STROKE);
         }
 
         /**
@@ -382,7 +382,7 @@ public class GraphView extends HorizontalScrollView {
             Path graphPath = new Path();
 
             //HashMap to hold time markers position
-            HashMap<Integer, String> timeMap = new HashMap<>();
+//            HashMap<Integer, String> timeMap = new HashMap<>();
 
             //Initialize start position for wave path
             int x = (int) (width * graphXOffset);
@@ -390,7 +390,7 @@ public class GraphView extends HorizontalScrollView {
 
             //Path variable for marker
             Path markerPath = new Path();
-            markerPaint.setStrokeWidth((float) (width - (width * graphXOffset)));
+//            markerPaint.setStrokeWidth((float) (width - (width * graphXOffset)));
             markerPath.moveTo(x + (width / 8), 0);
             markerPath.lineTo(x + (width / 8), height);
 
@@ -404,16 +404,16 @@ public class GraphView extends HorizontalScrollView {
             */
             for (int i = listSize - 1; x >= 0 - waveLength; x = x - waveLength) {
                 if (i >= 0) {
-                    if (i == 0) {
-                        timeMap.put(x - redrawCount, "00:00"); //put time 00.00 for first sample
-                    } else {
-                        long currentSampleTime = pointList.get(i).getTime();
-                        long lastSampleTime = pointList.get(i - 1).getTime();
-                        //put a time marker if current sampled time passes timeScale sec
-                        if (lastSampleTime % timeScale > currentSampleTime % timeScale) {
-                            timeMap.put(x - redrawCount, formatTime(currentSampleTime));
-                        }
-                    }
+//                    if (i == 0) {
+//                        timeMap.put(x - redrawCount, "00:00"); //put time 00.00 for first sample
+//                    } else {
+//                        long currentSampleTime = pointList.get(i).getTime();
+//                        long lastSampleTime = pointList.get(i - 1).getTime();
+//                        //put a time marker if current sampled time passes timeScale sec
+//                        if (lastSampleTime % timeScale > currentSampleTime % timeScale) {
+//                            timeMap.put(x - redrawCount, formatTime(currentSampleTime));
+//                        }
+//                    }
 
                     int amplitude = (int) pointList.get(i).getAmplitude();
                     drawAmplitude(amplitude, x, graphPath, needlePath);
@@ -421,7 +421,7 @@ public class GraphView extends HorizontalScrollView {
                 }
                 i--;
             }
-            renderAmplitude(timeMap, graphPath, markerPath, needlePath);
+            renderAmplitude(null, graphPath, markerPath, needlePath);
         }
 
         /**
@@ -467,15 +467,15 @@ public class GraphView extends HorizontalScrollView {
                             tempCanvas.drawColor(canvasColor);
 
                             //Draw time texts
-                            Set<Integer> keys = timeMap.keySet();
-                            for (int key : keys) {
-                                tempCanvas.drawText(timeMap.get(key), key, 20, timePaint);
-                            }
+//                            Set<Integer> keys = timeMap.keySet();
+//                            for (int key : keys) {
+//                                tempCanvas.drawText(timeMap.get(key), key, 20, timePaint);
+//                            }
                             /*  Draw sine waves, marker and needle  */
                             tempCanvas.drawPath(tempPath, paint);
-                            if (markerPath != null) {
-                                tempCanvas.drawPath(markerPath, markerPaint);
-                            }
+//                            if (markerPath != null) {
+//                                tempCanvas.drawPath(markerPath, markerPaint);
+//                            }
                             if (needlePath != null) {
                                 tempCanvas.drawPath(needlePath, needlePaint);
                             }
